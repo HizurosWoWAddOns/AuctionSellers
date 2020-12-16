@@ -1,0 +1,12 @@
+## Interface: 90002
+## Title: Auction sellers
+## Notes: Display in tooltip a list of sellers on item lists.
+## Author: Hizuro
+## Version: @project-version@
+## SavedVariables:
+## OptionalDeps:
+
+## X-Curse-Project-ID: 428903
+
+Localizations.lua
+AuctionSellers.lua

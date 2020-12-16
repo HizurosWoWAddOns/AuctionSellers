@@ -1,0 +1,14 @@
+package-as: AuctionSellers
+
+# externals:
+
+enable-nolib-creation: no
+
+ignore:
+  - .luacheckrc
+  - .env
+  - .gitignore
+  - .github
+  - .release
+
+# license-output: LICENSE.txt
