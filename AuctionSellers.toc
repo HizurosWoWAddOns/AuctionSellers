@@ -3,10 +3,11 @@
 ## Notes: Display in tooltip a list of sellers on item lists.
 ## Author: Hizuro
 ## Version: @project-version@
-## SavedVariables:
+## SavedVariables: AuctionSellersBNetFriendsDB
 ## OptionalDeps:
 
 ## X-Curse-Project-ID: 428903
 
 Localizations.lua
+highlighting.lua
 AuctionSellers.lua

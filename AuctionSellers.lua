@@ -37,43 +37,13 @@ do
 	end
 end
 
-local bnetFriends = {}
-local function collectBnetFriends()
-end
-
-local friends = {}
-local function collectFriends()
-end
-
-local guildMembers = {};
-local function collectGuildMembers()
-	local fullName
-	if not normalizedRealmName then
-		normalizedRealmName = GetNormalizedRealmName(); -- fail save
-	end
-	for i=1, (GetNumGuildMembers()) do
-		fullName = GetGuildRosterInfo(i);
-		if fullName then
-			guildMembers[fullName]=true;
-			fullName = fullName:gsub("%-"..normalizedRealmName,"");
-			guildMembers[fullName]=true;
-		end
-	end
-end
-
 local function AddOwners(owners)
 	for i=1, #owners do
 		local name,color = owners[i],NORMAL_FONT_COLOR;
-		if name=="player" then
-			name,color = YOU,GREEN_FONT_COLOR;
-		elseif guildMembers[name] then
-			name,color = name.." ("..LFG_LIST_GUILD_MEMBER..")",GREEN_FONT_COLOR;
-		elseif bnetFriends[name] then
-			name,color = name.." ("..FRIEND..")",ORANGE_FONT_COLOR;
-		elseif friends[name] then
-			name,color = name.." ("..FRIEND..")",BATTLENET_FONT_COLOR;
+		if name~="player" and not name:find("%-") then
+			name = name.."-"..normalizedRealmName;
 		end
-		GameTooltip_AddColoredLine(GameTooltip, name, color);
+		GameTooltip_AddColoredLine(GameTooltip, ns.GetHighlight(name));
 	end
 end
 
@@ -120,20 +90,52 @@ do
 end
 
 local frame = CreateFrame("Frame");
+local bnetEvents = {
+	BN_CONNECTED=true,
+	BN_DISCONNECTED=true,
+	BN_FRIEND_ACCOUNT_OFFLINE=true,
+	BN_FRIEND_ACCOUNT_ONLINE=true,
+	BN_FRIEND_INFO_CHANGED=true,
+	BN_INFO_CHANGED=true,
+};
 frame:SetScript("OnEvent",function(self,event,...)
-	if event=="ADDON_LOADED" and addon==(...) then
-		ns.print(L["AddOnLoaded"]);
-	elseif IsInGuild() and (event=="GUILD_ROSTER_UPDATE" or event=="PLAYER_LOGIN") then
-		if not normalizedRealmName then
-			normalizedRealmName = GetNormalizedRealmName();
+	if event=="VARIABLES_LOADED" then
+		if type(AuctionSellersBNetFriendsDB)~="table" then
+			AuctionSellersBNetFriendsDB = {};
 		end
-		C_GuildInfo.GuildRoster();
-		collectGuildMembers();
+		normalizedRealmName = GetNormalizedRealmName();
+		ns.print(L["AddOnLoaded"]);
+		self:UnregisterEvent(event);
+		return;
 	end
-	-- friends event
-	-- bnet friends event
+
+	-- update guild members
+	if (event=="GUILD_ROSTER_UPDATE" or event=="PLAYER_LOGIN") and IsInGuild() then
+		C_GuildInfo.GuildRoster();
+		ns.UpdateGuildMembers();
+	end
+
+	-- update friends
+	if (event=="" or event=="PLAYER_LOGIN") then
+		ns.UpdateFriends();
+	end
+
+	-- update bnet friends
+	if (bnetEvents[event] or event=="PLAYER_LOGIN") and BNConnected() then
+		ns.UpdateBNetFriends();
+	end
 end);
 
-frame:RegisterEvent("ADDON_LOADED");
+frame:RegisterEvent("VARIABLES_LOADED");
 frame:RegisterEvent("PLAYER_LOGIN");
+-- guild
 frame:RegisterEvent("GUILD_ROSTER_UPDATE");
+-- friends
+frame:RegisterEvent("FRIENDLIST_UPDATE");
+-- bnet friends
+frame:RegisterEvent("BN_CONNECTED");
+frame:RegisterEvent("BN_DISCONNECTED");
+frame:RegisterEvent("BN_FRIEND_ACCOUNT_OFFLINE");
+frame:RegisterEvent("BN_FRIEND_ACCOUNT_ONLINE");
+frame:RegisterEvent("BN_FRIEND_INFO_CHANGED");
+frame:RegisterEvent("BN_INFO_CHANGED");
