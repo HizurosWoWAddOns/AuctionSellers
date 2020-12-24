@@ -14,7 +14,7 @@ function ns.GetHighlight(name)
 		label,color = LFG_LIST_GUILD_MEMBER,GREEN_FONT_COLOR;
 	elseif bnetFriends[name] then
 		label,color = bnetFriends[name],BATTLENET_FONT_COLOR;
-	elseif ns.IsFriend(name) then
+	elseif friends[name] then
 		label,color = FRIEND,ORANGE_FONT_COLOR;
 	else
 		return name,NORMAL_FONT_COLOR;

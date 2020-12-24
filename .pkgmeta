@@ -5,10 +5,10 @@ package-as: AuctionSellers
 enable-nolib-creation: no
 
 ignore:
-  - .luacheckrc
-  - .env
-  - .gitignore
-  - .github
-  - .release
+   - .luacheckrc
+   - .env
+   - .gitignore
+   - .github
+   - .release
 
 # license-output: LICENSE.txt
