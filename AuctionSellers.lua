@@ -38,6 +38,9 @@ do
 end
 
 local function AddOwners(owners)
+	if not normalizedRealmName then
+		normalizedRealmName = GetNormalizedRealmName();
+	end
 	for i=1, #owners do
 		local name,color = owners[i],NORMAL_FONT_COLOR;
 		if name~="player" and not name:find("%-") then
