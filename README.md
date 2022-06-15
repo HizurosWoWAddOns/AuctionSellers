@@ -18,7 +18,7 @@ This addon will be display a list of sellers in a tooltip on price lists of a ch
 * BattleNet friends
   * Can't immediately recognize all characters of your battlenet friends. Takes some time to collect names.)
 
-![Screenshot1](./.github/media/auctionsellers.jpeg)
+![Screenshot1](./.github/media/auctionsellers.jpg)
 
 ## Credit
 Thanks at my guild master **Béauty** for here wish.
