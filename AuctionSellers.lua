@@ -1,41 +1,8 @@
 
 local addon, ns = ...;
 local L,normalizedRealmName = ns.L;
-
-do
-	local addon_short = "AS" --L[addon.."_Shortcut"];
-	local colors = {"82c5ff","00ff00","ff6060","44ffff","ffff00","ff8800","ff44ff","ffffff"};
-	ns.debugMode = "@project-version@" == "@".."project-version".."@";
-	local function colorize(...)
-		local t,c,a1 = {tostringall(...)},1,...;
-		if type(a1)=="boolean" then tremove(t,1); end
-		if a1~=false then
-			tinsert(t,1,"|cff82c5ff"..((a1==true and addon_short) or (a1=="||" and "||") or addon).."|r"..(a1~="||" and HEADER_COLON or ""));
-			c=2;
-		end
-		for i=c, #t do
-			if not t[i]:find("\124c") then
-				t[i],c = "|cff"..colors[c]..t[i].."|r", c<#colors and c+1 or 1;
-			end
-		end
-		return unpack(t);
-	end
-	function ns.print(...)
-		print(colorize(...));
-	end
-	function ns.debug(name,...)
-		ConsolePrint(date("|cff999999%X|r"),colorize("<debug::"..name..">",...));
-	end
-	function ns.debugPrint(name,...)
-		if not ns.debugMode then return end
-		print(colorize("<debug::"..name..">",...))
-	end
-	if ns.debugMode then
-		_G[addon.."_GetNamespace"] = function()
-			return ns;
-		end
-	end
-end
+ns.debugMode = "@project-version@"=="@".."project-version".."@";
+LibStub("HizurosSharedTools").RegisterPrint(ns,addon,"AS");
 
 local function AddOwners(owners)
 	if not normalizedRealmName then
@@ -107,7 +74,7 @@ frame:SetScript("OnEvent",function(self,event,...)
 			AuctionSellersBNetFriendsDB = {};
 		end
 		normalizedRealmName = GetNormalizedRealmName();
-		ns.print(L["AddOnLoaded"]);
+		ns:print(L["AddOnLoaded"]);
 		self:UnregisterEvent(event);
 		return;
 	end

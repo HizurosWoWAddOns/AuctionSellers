@@ -1,14 +1,35 @@
 package-as: AuctionSellers
 
-# externals:
+externals:
+    libs/LibStub:
+        url: https://repos.wowace.com/wow/libstub/trunk
+        tag: latest
+
+    libs/CallbackHandler-1.0:
+        url: https://repos.wowace.com/wow/callbackhandler/trunk/CallbackHandler-1.0
+        tag: latest
+
+    libs/LibColors-1.0:
+        url: https://github.com/HizurosWoWAddOns/LibColors-1.0.git
+        tag: latest
+
+    libs/HizurosSharedTools:
+        url: https://github.com/HizurosWoWAddOns/HizurosSharedTools.git
 
 enable-nolib-creation: no
 
 ignore:
-   - .luacheckrc
-   - .env
-   - .gitignore
-   - .github
-   - .release
+    - libs/LibStub/tests
+    - libs/LibStub/LibStub.toc
+    - libs/CallbackHandler-1.0/CallbackHandler-1.0.xml
+    - libs/LibColors-1.0/.pkgmeta
+    - libs/LibColors-1.0/colors_fed_standard_595.lua
+    - libs/LibColors-1.0/colors_web.lua
+    - libs/LibColors-1.0/colors_x11.lua
+    - libs/LibColors-1.0/LibColors-1.0-all.xml
+    - libs/LibColors-1.0/LibColors-1.0-fed595.xml
+    - libs/LibColors-1.0/LibColors-1.0-web.xml
+    - libs/LibColors-1.0/LibColors-1.0-x11.xml
+    - libs/LibColors-1.0/LibColors-1.0.toc
+    - libs/HizurosSharedTools/README.md
 
-# license-output: LICENSE.txt

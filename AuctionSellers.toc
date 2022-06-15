@@ -1,13 +1,21 @@
-## Interface: 90200
+## Interface: 90205
 ## Title: Auction sellers
 ## Notes: Display in tooltip a list of sellers on item lists.
 ## Author: Hizuro
 ## Version: @project-version@
 ## SavedVariables: AuctionSellersBNetFriendsDB
-## OptionalDeps:
+## OptionalDeps: LibStub, CallbackHandler-1.0, LibColors-1.0
 
 ## X-Curse-Project-ID: 428903
 
+libs\LibStub\LibStub.lua
+libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
+libs\LibColors-1.0\LibColors-1.0.xml
+libs\HizurosSharedTools\HizurosSharedTools.lua
+
 Localizations.lua
+#@do-not-package@
+Localizations.workfile.lua
+#@end-do-not-package@
 highlighting.lua
 AuctionSellers.lua
