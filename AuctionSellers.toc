@@ -1,4 +1,4 @@
-## Interface: 90205
+## Interface: 90207
 ## Title: Auction sellers
 ## Notes: Display in tooltip a list of sellers on item lists.
 ## Author: Hizuro
