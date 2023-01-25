@@ -19,6 +19,10 @@ end
 
 local isShown = false;
 local function lineOnEnter(line)
+	local rowData = line:GetRowData();
+	if not (rowData and rowData.owners and #rowData.owners>0) then
+		return;
+	end
 	if line.rowData.containsOwnerItem or line.rowData.containsAccountItem then
 		GameTooltip_AddColoredLine(GameTooltip, HOT_ITEM_SELLER, HIGHLIGHT_FONT_COLOR);
 		AddOwners(line.rowData.owners);
@@ -40,23 +44,19 @@ local function lineOnLeave(line)
 	end
 end
 
-do
-	local isInitialized = false;
-	local function hookCreateTableBuilder(buttons)
-		if not AuctionHouseFrame.CommoditiesBuyFrame.ItemList.tableBuilder then return end
-		for i=1, #buttons do
+local hookedButtons = {};
+
+local function hookListButtons()
+	local view = AuctionHouseFrame.CommoditiesBuyFrame.ItemList.ScrollBox:GetView();
+	if not (view and view:GetFrameCount()>0) then return; end
+	local buttons = view:GetFrames();
+	for i=1, #buttons do
+		if not hookedButtons[buttons[i]] then
 			buttons[i]:HookScript("OnEnter",lineOnEnter);
 			buttons[i]:HookScript("OnLeave",lineOnLeave);
+			hookedButtons[buttons[i]] = true;
 		end
-		isInitialized = true;
 	end
-	hooksecurefunc(_G,"CreateTableBuilder",function(buttons,TableBuilderMixin)
-		if isInitialized then return end
-		if TableBuilderMixin~=AuctionHouseTableBuilderMixin then return end
-		C_Timer.After(0.1,function()
-			hookCreateTableBuilder(buttons);
-		end);
-	end);
 end
 
 local frame = CreateFrame("Frame");
@@ -69,13 +69,15 @@ local bnetEvents = {
 	BN_INFO_CHANGED=true,
 };
 frame:SetScript("OnEvent",function(self,event,...)
-	if event=="VARIABLES_LOADED" then
+	if event=="ADDON_LOADED" and addon==... then
 		if type(AuctionSellersBNetFriendsDB)~="table" then
 			AuctionSellersBNetFriendsDB = {};
 		end
 		normalizedRealmName = GetNormalizedRealmName();
 		ns:print(L["AddOnLoaded"]);
-		self:UnregisterEvent(event);
+		return;
+	elseif event=="ADDON_LOADED" and ...=="Blizzard_AuctionHouseUI" then
+		hooksecurefunc(AuctionHouseFrame.CommoditiesBuyFrame.ItemList.ScrollBox,"Update",hookListButtons);
 		return;
 	end
 
@@ -96,7 +98,7 @@ frame:SetScript("OnEvent",function(self,event,...)
 	end
 end);
 
-frame:RegisterEvent("VARIABLES_LOADED");
+frame:RegisterEvent("ADDON_LOADED");
 frame:RegisterEvent("PLAYER_LOGIN");
 -- guild
 frame:RegisterEvent("GUILD_ROSTER_UPDATE");
