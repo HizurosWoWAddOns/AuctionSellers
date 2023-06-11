@@ -1,4 +1,4 @@
-## Interface: 100007
+## Interface: 100100
 ## Title: Auction sellers
 ## Notes: Display in tooltip a list of sellers on item lists.
 ## Author: Hizuro
