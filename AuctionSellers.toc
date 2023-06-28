@@ -1,6 +1,7 @@
 ## Interface: 100100
 ## Title: Auction sellers
 ## Notes: Display in tooltip a list of sellers on item lists.
+## IconTexture: 413570
 ## Author: Hizuro
 ## Version: @project-version@
 ## SavedVariables: AuctionSellersBNetFriendsDB
