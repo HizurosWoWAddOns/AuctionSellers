@@ -1,4 +1,4 @@
-## Interface: 110005
+## Interface: 110007
 ## Title: Auction sellers
 ## Notes: Display in tooltip a list of sellers on item lists.
 ## IconTexture: 413570
