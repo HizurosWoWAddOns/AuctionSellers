@@ -1,5 +1,5 @@
 # AuctionSellers (WoW AddOn)
-![Build](https://github.com/HizurosWoWAddOns/AuctionSellers/actions/workflows/bigwigsmods-packager.yml/badge.svg)
+![Build](https://img.shields.io/github/actions/workflow/status/HizurosWoWAddOns/AuctionSellers/packager.yml?style=flat-square)
 ![Tag](https://img.shields.io/github/v/tag/HizurosWoWAddOns/AuctionSellers?style=flat-square)
 ![Downloads](https://img.shields.io/github/downloads/HizurosWoWAddOns/AuctionSellers/total?style=flat-square)
 ![Downloads](https://img.shields.io/github/downloads/HizurosWoWAddOns/AuctionSellers/latest/total?style=flat-square)
