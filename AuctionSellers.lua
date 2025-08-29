@@ -28,7 +28,7 @@ local function lineOnEnter(line)
 		AddOwners(line.rowData.owners);
 		GameTooltip:Show();
 	elseif GameTooltip:GetOwner()==line then
-		ConsolePrint(addon,"<lineOnEnter>","<line is already owner>","by?")
+		--ns:debug(addon,"<lineOnEnter>","<line is already owner>","by?")
 	else
 		GameTooltip:SetOwner(line, "ANCHOR_RIGHT");
 		GameTooltip_SetTitle(GameTooltip,HOT_ITEM_SELLER);
